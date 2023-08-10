@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if 'update' in request.path %}
+{{ block.super }}| Actualizar curso
+{% else %}
+{{ block.super }}| Crear nuevo curso
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 my-4">
+    <div class="card bg-dark text-white" style="background-color: #303030;">
+      <h5 class="card-header text-center bg-primary rounded-top">
+        {% if 'update' in request.path %}
+        <span style="color: white;">Actualizar curso</span>
+        {% else %}
+        <span style="color: white;">Crear curso</span>
+        {% endif %}
+      </h5>
+      <div class="card-body" style="background-color: #303030;">
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+
+          <!-- Campos de lecciones -->
+          <div id="lecciones-container">
+            {% for leccion in lecciones %}
+            <div class="leccion">
+              <h4 style="color:white;">Lección {{ forloop.counter }}</h4>
+              <input type="text" class="form-control leccion-titulo" value="{{ leccion.titulo }}" placeholder="Ingrese el título de la lección">
+              <input type="url" class="form-control leccion-enlace" value="{{ leccion.enlace }}" placeholder="Ingrese el enlace de la lección">
+            </div>
+            {% endfor %}
+          </div>
+          <button type="button" class="btn btn-primary" id="agregar-leccion">Agregar Lección</button>
+
+          <!-- Campo oculto para almacenar los datos de las lecciones -->
+          <input type="hidden" name="lecciones" id="lecciones">
+
+          <button class="btn btn-secondary mt-3" type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    let leccionCount = {{ lecciones|length }} + 1;
+
+    $("#agregar-leccion").click(function() {
+      let leccionHTML = `
+        <div class="leccion">
+            <h4 style="color:white;">Lección ${leccionCount}</h4>
+            <input type="text" class="form-control leccion-titulo" placeholder="Ingrese el título de la lección">
+            <input type="url" class="form-control leccion-enlace" placeholder="Ingrese el enlace de la lección">
+        </div>
+        `;
+      $("#lecciones-container").append(leccionHTML);
+      leccionCount++;
+    });
+
+    // Actualizar el campo 'lecciones' con los datos de todas las lecciones
+    $("form").submit(function() {
+      let leccionesData = [];
+      $(".leccion").each(function(index) {
+        let titulo = $(this).find(".leccion-titulo").val();
+        let enlace = $(this).find(".leccion-enlace").val();
+        leccionesData.push(`${index + 1},${titulo},${enlace}`);
+      });
+      $("#lecciones").val(leccionesData.join(';'));
+    });
+  });
+</script>
+{% endblock content %}
+

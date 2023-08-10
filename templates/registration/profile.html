@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block widgets %}{% endblock widgets %}
+{% block title %}{{ block.super }}| {{ request.user|title }} Profile{% endblock title %}
+{% block content %}
+<div class="row my-3 mb-5">
+    <div class="col-md-4" >
+        <div class="card" style ="background-color:#303030;" >
+            <h5></h5>
+            <h5></h5>
+            <h5></h5>
+            <h5 class="card-header text-center bg-primary text-white text-center rounded-top">Foto de Perfil</h5>
+            <div class="card-body text-center">
+                <img class="rounded-circle profile_picture" src="{{ request.user.profile.image.url }}" alt="{{request.user}}">
+            </div>
+            <a class="btn btn-primary" href="{% url 'update_image' %}" role="button">Change Picture</a>
+        </div>
+    </div>
+    <div class="col-md-8 mb-5">
+        <div class="card" style ="background-color:#303030;"  >
+            <h5 class="card-header text-center">
+                {% if 'profile' in request.path %}
+                <h5 class="card-header bg-primary text-white text-center rounded-top">Detalles de Perfil</h5>
+                {% else %}
+                <h5 class="card-header bg-primary text-white text-center rounded-top">Todos los cursos</h5>
+                {% endif %}
+            </h5>
+            <div class="card-body">
+                <form action="." method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

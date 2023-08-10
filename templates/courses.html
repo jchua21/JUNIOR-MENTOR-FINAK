@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ block.super }}| About{% endblock title %}
+{% block content %}
+
+<section class="courses seccion">
+  <div class="container">
+    <div class="courses-heading">
+      <h2 >Nuestros Cursos</h2>
+      <span>Innovadora Manera de Aprender</span>
+    </div>
+
+    <div class="courses-grid">
+      <div class="course">
+        <div class="course-img">
+          <img src="{% static 'img/course-1.jpg' %}" alt="">
+        </div>
+        <div class="course-body">
+          <span>
+            <i class="ri-group-fill"></i>
+            25 students
+          </span>
+
+          <div class="course-info">
+            <h3 class="course-title">Web Design & Development courses for beginner</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima laborum ratione nihil, eveniet, alias labore magnam corporis nesciunt inventore</p>
+          </div>
+
+          <div class="course-footer">
+            <span class="course-price">$99</span>
+            <a href="" class="btn"> Ver </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="course">
+        <div class="course-img">
+          <img src="{% static 'img/course-2.jpg' %}" alt="">
+        </div>
+        <div class="course-body">
+          <span>
+            <i class="ri-group-fill"></i>
+            25 students
+          </span>
+
+          <div class="course-info">
+            <h3 class="course-title">Web Design & Development courses for beginner</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima laborum ratione nihil, eveniet, alias labore magnam corporis nesciunt inventore</p>
+          </div>
+
+          <div class="course-footer">
+            <span class="course-price">$99</span>
+            <a href="" class="btn"> Ver </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="course">
+        <div class="course-img">
+          <img src="{% static 'img/course-3.jpg' %}" alt="">
+        </div>
+        <div class="course-body">
+          <span>
+            <i class="ri-group-fill"></i>
+            25 students
+          </span>
+
+          <div class="course-info">
+            <h3 class="course-title">Web Design & Development courses for beginner</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima laborum ratione nihil, eveniet, alias labore magnam corporis nesciunt inventore</p>
+          </div>
+
+          <div class="course-footer">
+            <span class="course-price">$99</span>
+            <a href="" class="btn"> Ver </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}

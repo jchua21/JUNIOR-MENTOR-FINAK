@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block widgets %}{% endblock widgets %}
+{% block title %}{{ block.super }}| User Registration{% endblock title %}
+{% block content %}
+<style>
+.larger-div {
+  width: 120%;
+  max-width: 800px; /* Ajusta este valor según tus necesidades */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+<div class="seccion">
+  <div class="container-medium">
+    <div class="card my-2 rounded larger-div" style="background-color: #303030;">
+      <div class="col-lg-10 mx-auto my-5">
+        <div class="register">
+          <div class="text-center login-heading">
+            <h2>Registrarse</h2>
+          </div>
+          <form action="." method="POST" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="form-submit btn">Register</button>
+          </form>
+          <nav class="account-links">
+            <a href="{% url 'password_reset' %}">Olvidaste tu password?</a>
+            <a href="{% url 'login' %}">Ya tienes cuenta?</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

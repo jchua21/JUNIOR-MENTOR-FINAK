@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}JuniorMentor| Home{% endblock title %}
+{% block content %}
+
+<style>
+    .course-img img {
+        max-height: 200px;
+        width: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .course-body {
+        overflow: hidden;
+    }
+
+    .course {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .course-footer {
+        clear: both;
+    }
+
+    .course-title {
+        max-height: 3.6em; /* Adjust this value as needed */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal; /* Reset to normal for multi-line text */
+    }
+
+    @media (max-width: 576px) {
+        .course-img img {
+            max-height: 150px;
+        }
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row flex-row flex-lg-row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="row">
+                {% if object_list %}
+                {% for obj in object_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="course h-100">
+                        <div class="course-img">
+                             <img src="{{ obj.image.url }}" alt="" class="img-fluid" style="max-height: 200px; width: 100%; object-fit: cover;">
+                        </div>
+                        <div class="course-body">
+                            <span>
+                                <i class="ri-group-fill"></i>
+                                {{ obj.persons }} Estudiantes
+                                <div class="user-icons float-right">
+                                    {% if obj in user_liked_posts %}
+                                    <form action="{% url 'home' %}" id='like_form{{ obj.id }}' method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="unlike" value="{{ obj.id }}">
+                                        <a href="javascript:{}"
+                                           onclick="document.getElementById('like_form{{obj.id}}').submit(); return false;">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    </form>
+                                    {% else %}
+                                    <form action="{% url 'home' %}" id='unlike_form{{ obj.id }}' method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="like" value="{{ obj.id }}">
+                                        <a href="javascript:{}"
+                                           onclick="document.getElementById('unlike_form{{obj.id}}').submit(); return false;">
+                                            <i class="far fa-thumbs-up"></i>
+                                        </a>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </span>
+                            <div class="course-info">
+                                <h3 class="course-title">
+                                    <a href="{% url 'detail' obj.slug %}" style="color: #fff;">{{ obj.title }}</a>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                       <b>Categoría: </b>
+                                        {% for cat in obj.get_categories %}
+                                        <a href="?q={{ request.GET.q }}&cat={{ cat }}">{{ cat }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <b>Likes:</b> {{ obj.likes_count }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <span class="course-price"> S/.{{ obj.price|intcomma }} </span>
+                            <a href="{% url 'detail' obj.slug %}" class="btn float-right"> Ver </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-courses">
+                <P class="btn btn-warning ml-3">Lo sentimos !! Curso no encontrado...</P>
+            </div>
+            {% endif %}
+            <!-- Pagination -->
+            <div class="mt-4">
+                {% if is_paginated %}
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&larr; Anterior</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">&larr; Anterior</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente &rarr;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Siguiente &rarr;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 order-lg-2">
+            <div class="sticky-widgets">
+                {% block widgets %}{% include 'partials/_widgets.html' %}{% endblock widgets %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

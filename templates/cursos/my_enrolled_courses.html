@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row my-3 mb-5">
+  <div class="col-md-12 mb-5">
+
+    <div class="card">
+      <h5 class="card-header bg-primary text-white text-center rounded-top">Cursos en los que estoy matriculado</h5>
+      <div class="card-body" style="background-color: #303030;">
+        {% if enrolled_courses %}
+        <div class="table-responsive">
+          <table class="table table-striped text-center">
+            <thead class="thead-primary">
+              <tr>
+                <th scope="col">Título</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for curso in enrolled_courses %}
+              <tr>
+                <td><a href="{% url 'detail' slug=curso.slug %}" class="text-primary font-weight-bold">{{ curso.title }}</a></td>
+                <td>{{ curso.categories }}</td>
+                <td>
+                  <form method="post" action="{% url 'unenroll' curso.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-warning btn-sm rounded-pill">Desmatricularme</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-center">No estás matriculado en ningún curso.</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

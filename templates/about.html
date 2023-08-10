@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ block.super }}| About{% endblock title %}
+{% block content %}
+
+<section class="about seccion">
+  <div class="container">
+    <img src="{% static 'img/about.jpg' %}" alt="">
+    <div class="about-data">
+      <div class="about-heading">
+        <h2 >Nosotros</h2>
+        <span>Innovadora Manera de Aprender</span>
+      </div>
+      <p>Somos JuniorMentor, una plataforma educativa comprometida con brindar una experiencia de aprendizaje innovadora y enriquecedora. Nuestro objetivo es ayudarte a alcanzar tus metas académicas y profesionales a través de cursos de alta calidad y recursos didácticos excepcionales.
+      Con un equipo de profesores apasionados y expertos en diversas disciplinas, estamos aquí para inspirarte y guiarte en tu viaje de aprendizaje. Ya sea que estés buscando adquirir nuevas habilidades, mejorar tus conocimientos o explorar nuevas pasiones, estamos aquí para acompañarte en cada paso del camino.</p>
+      <p>En JuniorMentor, creemos en la transformación a través de la educación. Nuestra misión es empoderarte para que alcances tus metas y te conviertas en el mejor profesional que puedas ser. Te invitamos a unirte a nuestra comunidad de estudiantes comprometidos y apasionados que comparten tu deseo de aprender y crecer.
+      ¡Explora nuestros cursos, únete a nuestra comunidad y comienza tu viaje hacia el éxito con JuniorMentor!</p>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
